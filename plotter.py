@@ -116,7 +116,8 @@ def plotPalettesGrid(listOfPalettes, palettesPerColumn=10, colGap=20,borderThick
             combinedPalette[yOff:yOff + paletteHeight,
                             xOff + i*step:xOff + (i+1)*step, :] = color
     
-    combinedPalette = addBorder(combinedPalette,borderThickness=borderThickness,borderColor=borderColor)
+    if borderThickness != 0:
+        combinedPalette = addBorder(combinedPalette,borderThickness=borderThickness,borderColor=borderColor)
 
 
     plt.figure(figsize=(nCols * 3, nRows * 0.5))
@@ -184,20 +185,20 @@ def saveGraph(quality,name):
 
 def main():
 
-    data=parseData("data\\paletteData.txt")[259]
+    data=parseData("data\\paletteData.txt")#[259]
 
     dataNames=parseNames("data\\names.txt")[259]
     #print(len(data))
     #print(len(dataNames))
 
 
-    plotPaletteAndImage(data,dataNames,borderThickness=10)
+    #plotPaletteAndImage(data,dataNames,borderThickness=10)
     #plotPalette(data)
 
-    #plotPalettesGrid(data,palettesPerColumn=50,backGround=[255,255,255])
+    plotPalettesGrid(data,palettesPerColumn=50,backGround=[255,255,255],borderThickness=0)
 
-    saveGraph(200,name="example1")
-    plt.show()
+    saveGraph(300,name="all palettes")
+    #plt.show()
     
 
     return "done"
