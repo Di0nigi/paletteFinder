@@ -187,7 +187,7 @@ def main():
     data=parseData("data\\paletteData.txt")[259]
 
     dataNames=parseNames("data\\names.txt")[259]
-    print(len(data))
+    #print(len(data))
     #print(len(dataNames))
 
 
