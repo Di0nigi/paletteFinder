@@ -27,35 +27,6 @@ def parseNames(path):
 
     return out
 
-def writeMat(size,backColor=[0,0,0]):
-
-    back=np.zeros(shape=size)+backColor
-
-
-
-    return back
-
-def drawColors(palettes,slotSize,colNum,backColor=[125,125,125],imageLike=None):
-
-    colHeight=(len(palettes)//colNum) * slotSize[1]
-
-    imwidth= slotSize[0] * 11 * colNum
-
-    #for ind,palette in enumerate(palettes):
-    #    palMat=[]
-    #    colSlot=[]
-    #    for col in palette:
-    #        colSlot+= np.zeros(shape=slotSize)+col
-    #        palMat.append(colSlot)
-    #palMat=np.array(palMat)
-    #plt.imshow(palMat)
-
-    for ind in range(imwidth):
-        for i in range(ind):
-            pass
-
-
-    return
 
 def plotPalette(colors):
     palette = np.zeros((50, 300, 3), dtype=np.uint8)
