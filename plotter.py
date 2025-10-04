@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+import ternary
 
 def parseData(path):
     out=[]
@@ -151,7 +152,7 @@ def addBorder(img, borderColor=(0, 0, 0), borderThickness=5, palette=None):
 def plotPaletteAndImage(colors, im, borderColor=(0, 0, 0), borderThickness=5):
     im=np.array(Image.open(im))
     imgHeight, imgWidth = im.shape[:2]
-    paletteHeight = 300
+    paletteHeight = 500
 
     palette = np.zeros((paletteHeight, imgWidth, 3), dtype=np.uint8)
     step = imgWidth // len(colors)
@@ -174,33 +175,96 @@ def plotPaletteAndImage(colors, im, borderColor=(0, 0, 0), borderThickness=5):
     return combined
 
 
-
-
-
 def saveGraph(quality,name):
     plt.savefig(f"out\\{name}.png",dpi=quality)
     return
 
 
+def ternaryPlot(colors):
+   
+    figure, tax = ternary.figure(scale=1.0)
+    tax.boundary(linewidth=1.5)
+    tax.gridlines(multiple=0.2, color="gray")  # every 20%
+    tax.ticks(axis='lbr', multiple=0.2, linewidth=1)
+
+    tax.left_axis_label("Green (0–255)")
+    tax.right_axis_label("Blue (0–255)")
+    tax.bottom_axis_label("Red (0–255)")
+
+    rgb=np.array([[255,0,0],[0,255,0],[0,0,255]])
+
+    colors=np.concat([rgb,colors])
+    colors=sorted(colors,key= lambda x: x[0]+x[1]+x[2])
+
+
+    colors2=normPalette(colors)
+
+    for ind, (r, g, b) in enumerate(colors2):
+        tax.scatter(
+            [(r, g, b)],
+            marker="o",
+            color=[colors[ind]/255], 
+            s=50,
+            edgecolors="black",       
+            linewidths=0,
+        )
+    tax.clear_matplotlib_ticks()
+    #tax.show()
+
+    return 
+
+def normPalette(colors):
+    normPalette=[]
+    for elem in colors:
+        elem = np.array(elem,dtype=float)
+        elem = elem /np.sum(elem) 
+        normPalette.append(elem)
+    #normPalette=sorted(normPalette,key= lambda x: x[0]+x[1]+x[2])
+    return normPalette
+
+
+
+
+
 
 def main():
 
-    data=parseData("data\\paletteData.txt")#[259]
+    nPhoto=259
 
-    dataNames=parseNames("data\\names.txt")[259]
+    data=parseData("data\\paletteData.txt")#[nPhoto]
+
+    dataNames=parseNames("data\\names.txt")[nPhoto]
     #print(len(data))
     #print(len(dataNames))
 
+    #plot_palette_histogram(data)[0]
+
+    
+    #ternaryPlot([[255,255,0]])
+    #plt.show()
+
+    
+    data=np.array(data)
+    #print(data.shape)
+    dF=np.reshape(data,shape=(data.shape[0]*data.shape[1],data.shape[2]))
+    #print(dF[0:1100])
+    ternaryPlot(dF)
+    saveGraph(400,"colorDistrib")
+
+
+
+
 
     #plotPaletteAndImage(data,dataNames,borderThickness=10)
-    #plotPalette(data)
+    #plotPalette(pl)
 
-    plotPalettesGrid(data,palettesPerColumn=50,backGround=[255,255,255],borderThickness=0)
+    #plotPalettesGrid(data,palettesPerColumn=70,backGround=[255,255,255],borderThickness=0)
 
-    saveGraph(300,name="all palettes")
+    #saveGraph(500,name="allPalettes")
     #plt.show()
-    
+    #ternaryPlot(data)
 
     return "done"
 
-print(main())
+if __name__ == "__main__":
+    print(main())

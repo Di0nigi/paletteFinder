@@ -144,14 +144,16 @@ def saveNames(files,file):
 
 
 def main():
-    #imgpath = "D:\\dionigi\\Desktop\\x100 prov\\edchives\\templateinstahg71.jpg"  
+    imgpath = "D:\\dionigi\\Desktop\\x100 prov\\edchives\\templateinstam90.jpg"  
 
-    images = dirToList("D:\\dionigi\\Desktop\\x100 prov\\edchives\\tutte")+dirToList("D:\\dionigi\\Desktop\\x100 prov\\edchives")
+    #images = dirToList("D:\\dionigi\\Desktop\\x100 prov\\edchives\\tutte")+dirToList("D:\\dionigi\\Desktop\\x100 prov\\edchives")
     #print(images)
-    saveNames(images,"data\\names.txt")
+    #saveNames(images,"data\\names.txt")
     allColors=[]
     
     nColors = 10
+
+    images=[imgpath]
 
     for imageP in images:
 
@@ -159,15 +161,17 @@ def main():
         colors=sorted(colors,key= lambda x: (x[0],x[1],x[2]))
         allColors.append(colors)
 
+    #p.plotPaletteAndImage(allColors[0],imgpath,borderThickness=10)
     
-    savePaletteData(allColors,"data\\paletteData.txt")
+    #p.saveGraph(100,"sofPalette")
+    #savePaletteData(allColors,"data\\paletteData.txt")
     #print(colors)
     #print(allColors)
     #p.plotPalettesGrid(allColors,40)
     
     #plotPalette(colors)
     #plt.show()
-    #####
+    #########
     return "done"
 
 
