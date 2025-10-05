@@ -1,10 +1,29 @@
 import numpy as np
 from skimage.color import rgb2lab 
+import plotter as p
+import matplotlib.pyplot as plt
 
 def findKMostPopular(palettes,k):
+    res=[]
 
-    
-    return
+    for p1 in palettes:
+        sim=0
+        for p2 in palettes:
+            p1C=clipEnds(p1)
+            p2C=clipEnds(p2)
+            #print(p1C)
+            s=0
+            for ind, col in enumerate(p1C):
+                dE=compareCol(col,p2C[ind])
+                if dE<=10:
+                    s+=1
+            if s>=6:
+                sim+=1
+        res.append((p1,sim))
+
+    res=sorted(res,key= lambda x: x[1],reverse=True)
+
+    return res[0:k]
 
 def mostKcolors(colors, k):
     res=[]
@@ -32,8 +51,15 @@ def compareCol(col1, col2):
     return dE
 
 def clipEnds(palette):
-    palette= palette[1:-1]
+    palette = palette[1:-1]
     return palette
+
+def flattenPalette(data):
+
+    data=np.array(data)
+    dF=np.reshape(data,shape=(data.shape[0]*data.shape[1],data.shape[2]))
+
+    return dF
 
 
 def main():
@@ -41,6 +67,21 @@ def main():
     #p=[0,1,2,3,4,5,6,7,8,9]
 
     #print(clipEnds(p))
+    data=p.parseData("data\\paletteData.txt")#[nPhoto]
+    data = list(map(clipEnds,data))
+    #print(data)
+    data= flattenPalette(data)
+    col=mostKcolors(data,k=1)
+
+    #print(col)
+    col = list(map(lambda x: x[0], col))
+    
+    print(col)
+    p.plotPalette(col)
+    plt.show()
+
+
+    
 
 
     return "done"

@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 import ternary
+import stats as st
 
 def parseData(path):
     out=[]
@@ -190,7 +191,7 @@ def normPalette(colors):
         elem = np.array(elem,dtype=float)
         elem = elem /np.sum(elem) 
         normPalette.append(elem)
-    #normPalette=sorted(normPalette,key= lambda x: x[0]+x[1]+x[2])
+    
     return normPalette
 
 
@@ -202,7 +203,7 @@ def main():
 
     nPhoto=259
 
-    data=parseData("data\\paletteData.txt")#[nPhoto]
+    data=parseData("data\\paletteData.txt")[nPhoto]
 
     dataNames=parseNames("data\\names.txt")[nPhoto]
     #print(len(data))
@@ -215,19 +216,18 @@ def main():
     #plt.show()
 
     
-    data=np.array(data)
-    #print(data.shape)
-    dF=np.reshape(data,shape=(data.shape[0]*data.shape[1],data.shape[2]))
+    #dF = st.flattenData(data)
     #print(dF[0:1100])
-    ternaryPlot(dF)
-    saveGraph(400,"colorDistrib")
+    #ternaryPlot(dF)
+    #saveGraph(400,"colorDistrib")
 
+    #print(data)
 
 
 
 
     #plotPaletteAndImage(data,dataNames,borderThickness=10)
-    #plotPalette(pl)
+    #plotPalette(data)
 
     #plotPalettesGrid(data,palettesPerColumn=70,backGround=[255,255,255],borderThickness=0)
 
