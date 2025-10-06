@@ -194,6 +194,30 @@ def normPalette(colors):
     
     return normPalette
 
+def plotColFreq(colorsAndFreq):
+
+    #colors=sorted(colorsAndFreq,key= lambda x: x[0]+x[1]+x[2] (lambda y: y[0]) )
+
+    col = list(map(lambda x: x[0], colorsAndFreq))
+
+    col = sorted(col,key= lambda x: x[0]+x[1]+x[2])
+
+    
+    barColors= list(map(lambda x: x/255, col))
+    #print(barColors)
+
+    colLabel= list(map(lambda x: f"{x}", col))
+
+    freq = list(map(lambda x: x[1], colorsAndFreq))
+
+    plt.bar(colLabel, freq,color=barColors,edgecolor='none')
+    plt.title('Bar Plot of Color Frequency')
+    plt.xlabel('Colors')
+    plt.ylabel('Frequency')
+    plt.xticks([])
+
+    return
+
 
 
 

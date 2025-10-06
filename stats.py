@@ -3,7 +3,7 @@ from skimage.color import rgb2lab
 import plotter as p
 import matplotlib.pyplot as plt
 
-def findKMostPopular(palettes,k):
+def findKMostPopular(palettes,k,sensibility=4):
     res=[]
 
     for p1 in palettes:
@@ -17,7 +17,7 @@ def findKMostPopular(palettes,k):
                 dE=compareCol(col,p2C[ind])
                 if dE<=10:
                     s+=1
-            if s>=6:
+            if s>=sensibility:
                 sim+=1
         res.append((p1,sim))
 
@@ -61,6 +61,14 @@ def flattenPalette(data):
 
     return dF
 
+def averagePalette(data):
+
+    data=np.array(data)
+
+    out=data.mean(axis=1) 
+    
+    return out
+
 
 def main():
 
@@ -68,21 +76,22 @@ def main():
 
     #print(clipEnds(p))
     data=p.parseData("data\\paletteData.txt")#[nPhoto]
-    data = list(map(clipEnds,data))
+    data2 = list(map(clipEnds,data))
+    #data = averagePalette(data)
+    data = list(map(clipEnds,data2))
     #print(data)
     data= flattenPalette(data)
-    col=mostKcolors(data,k=1)
+    col=mostKcolors(data,k=len(data))
+
+    p.plotColFreq(col)
 
     #print(col)
-    col = list(map(lambda x: x[0], col))
+    #col = list(map(lambda x: x[0], col))
     
-    print(col)
-    p.plotPalette(col)
+    #print(col)
+    #p.plotPalette(col)
+    #p.saveGraph(300,"Colors1")
     plt.show()
-
-
-    
-
 
     return "done"
 
