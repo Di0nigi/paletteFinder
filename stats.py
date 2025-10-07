@@ -90,7 +90,7 @@ def main():
     
     #print(col)
     #p.plotPalette(col)
-    #p.saveGraph(300,"Colors1")
+    #p.saveGraph(550,"ColorBarHD")
     plt.show()
 
     return "done"

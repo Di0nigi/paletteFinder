@@ -76,8 +76,6 @@ def plotPalettesGrid(listOfPalettes, palettesPerColumn=10, colGap=20,borderThick
     combinedPalette = np.zeros((canvasHeight, canvasWidth, 3), dtype=np.uint8)+backGround
 
     
-
-
     for idx, colors in enumerate(listOfPalettes):
         row = idx % palettesPerColumn
         col = idx // palettesPerColumn
@@ -152,7 +150,7 @@ def saveGraph(quality,name):
     return
 
 
-def ternaryPlot(colors):
+def ternaryPlot(colors,marksize=50):
    
     figure, tax = ternary.figure(scale=1.0)
     tax.boundary(linewidth=1.5)
@@ -176,7 +174,7 @@ def ternaryPlot(colors):
             [(r, g, b)],
             marker="o",
             color=[colors[ind]/255], 
-            s=50,
+            s=marksize,
             edgecolors="black",       
             linewidths=0,
         )
